@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Billboards Optimal Locations (Web Demo)</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="styles/site.css" rel="stylesheet" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="scripts/jquery-3.4.1.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div id="controldiv" class="container">
+
+        <div class="row justify-content-start">
+            <div class="col-sm-12">
+                A interactive web demo for using Maximal Covering Location Problem (MCLP) to located the optimal billboards location in Phoenix, AZ area.
+            </div>
+        </div>
+
+        <div class="row justify-content-start dropdown_container">
+            <div class="col-sm-6">
+                Business Type:
+            </div>
+            <select id="b-type-list" class="form-select form-select-sm col-sm-6" name="b-type">
+                <option value="automotive">Automotive</option>
+                <option value="beauty">Beauty</option>
+                <option value="food">Food</option>
+                <option value="home">Home Service</option>
+            </select>
+        </div>
+
+        <div class="row justify-content-start dropdown_container">
+            <div class="col-sm-6">
+                Field:
+            </div>
+            <select id="field-use-list" class="form-select form-select-sm col-sm-6" name="field-use">
+                <option value="review_c">Review Count</option>
+                <option value="rating">Rating</option>
+            </select>
+        </div>
+
+        <div class="row justify-content-start">
+            <div class="col-sm-6 input-label">
+                # Billboards:
+            </div>
+            <div class="input-group col-sm-3">
+                <input id="nbillboard-input" type="text" class="form-control" placeholder="Number of Billboards" aria-label="nbillboards" value="20">
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-sm-6 input-label">
+                Radius(meter):
+            </div>
+            <div class="input-group col-sm-3">
+                <input id="radius-input" type="text" class="form-control" placeholder="Radius(meters)" aria-label="radius" value="3000">
+            </div>
+        </div>
+
+        <div class="row justify-content-start">
+            <div class="col-sm-6">
+                Coverage Percentage:
+            </div>
+            <div class="input-group col-sm-3">
+                <div id="coverage-pct">-- %</div>
+            </div>
+        </div>
+
+        <div class="row justify-content-start">
+            <div class="col-sm-10">
+                <button id="cal-coverage-btn" type="button" class="btn btn-success">Get MCLP locations</button>
+            </div>
+            <div class="col-sm-10">
+                <button id="cal-popcoverage-btn" type="button" class="btn btn-success">Get MCLP by Population</button>
+            </div>
+            <div class="col-sm-10">
+                <button id="clear-btn" type="button" class="btn btn-danger">Clear</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="mapdiv"></div>
+    <script src="scripts/billboards-optimal-main.js"></script>
+
+</body>
+</html>

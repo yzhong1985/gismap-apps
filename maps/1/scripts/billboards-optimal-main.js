@@ -1,4 +1,6 @@
-﻿var greenIcon = new L.Icon({
+﻿const DEBUG = true;
+
+var greenIcon = new L.Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [12, 20],
@@ -128,9 +130,34 @@ L.control.layers(baseMaps, overlayMaps).addTo(map);
 var group = L.layerGroup();
 var pop_group = L.layerGroup();
 var result_data;
-const base_url = "http://localhost:5000/GetBillboardsMCLP?";
+//const base_url = "http://localhost:5000/GetBillboardsMCLP?";
+const base_url = "http://yzhong1985.redirectme.net:5432/";
 
 // bind events
+const mclp_rest_api = "GetBillboardsMCLP";
+const server_stat_api = "GetServerStatus";
+
+// check server status first
+server_stat_url = base_url + server_stat_api;
+
+$.get(server_stat_url, function (data, status) {
+    
+    if(DEBUG){
+        console.log(data);
+        
+    }
+    
+    server_data = data;
+    $("#server-stats").text(server_data.server);
+    $("#server-stats").css('color', 'green');
+
+
+}).fail(function(){
+    $("#server-stats").text("Offline");
+    $("#server-stats").css('color', 'red');
+
+});
+
 
 $("#cal-coverage-btn").click(function () {
 
@@ -140,12 +167,14 @@ $("#cal-coverage-btn").click(function () {
     n_text = $('#nbillboard-input').val();
     radius_txt = $('#radius-input').val()
 
-    request_url = base_url + "btype=" + btype_txt + "&n=" + n_text + "&radius=" + radius_txt + "&mode=prod";
+    request_url = base_url + mclp_rest_api + "?btype=" + btype_txt + "&n=" + n_text + "&radius=" + radius_txt + "&mode=prod";
 
     $.get(request_url, function (data, status) {
 
-        //for debug
-        console.log(data);
+        if(DEBUG){
+            console.log(data);
+        }
+
         result_data = data;
 
         var selected_billboards = JSON.parse(result_data.result);
@@ -160,7 +189,7 @@ $("#cal-coverage-btn").click(function () {
             }).addTo(group);
         });
 
-        $("#coverage-pct").text(result_data.covered_pct + " %");
+        $("#coverage-pct").text(result_data.covered_pct.toFixed(3) + " %");
 
     });
 });
